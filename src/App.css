@@ -1,8 +1,26 @@
 .App {
-  padding: 30px;
-  display: flex;
+    padding: 30px;
+    display: flex;
 }
 
 .App > div {
-  margin-right: 50px;
+    margin-right: 50px;
+}
+
+.isDone {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.active {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border: 2px solid green;
+    border-radius: 5px;
+}
+
+.error {
+    border: 3px solid red;
+    outline: none;
 }

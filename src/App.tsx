@@ -23,6 +23,10 @@ function App() {
         setTasks([{id: v1(), title, isDone: false}, ...tasks])
     }
 
+    const changeTaskStatus = (taskID: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskID ? {...t, isDone: isDone} : t))
+    }
+
 
     const [filter, setFilter] = useState<FilterValuesType>('all');
 
@@ -48,8 +52,11 @@ function App() {
             <TodoList
                 title={title_1}
                 tasks={tasksForRender}
+                filter={filter}
+
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                changeTaskStatus={changeTaskStatus}
                 addTask={addTask}
             />
             {/*<TodoList title={title_2} tasks={tasks_2} />*/}
