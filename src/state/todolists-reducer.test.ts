@@ -25,7 +25,6 @@ beforeEach(() => {
 
 test('correct todolist should be removed', () => {
 
-    // const endState = todolistsReducer(startState, { type: 'REMOVE-TODOLIST', id: todolistId1})
     const endState = todolistsReducer(startState, removeTodolistAC(todolistId1))
 
     expect(endState.length).toBe(1);
@@ -36,7 +35,6 @@ test('correct todolist should be added', () => {
 
     let newTodolistTitle = "New Todolist";
 
-    // const endState = todolistsReducer(startState, { type: 'ADD-TODOLIST', title: newTodolistTitle})
     const endState = todolistsReducer(startState, addTodoListAC(newTodolistTitle))
 
     expect(endState.length).toBe(3);
