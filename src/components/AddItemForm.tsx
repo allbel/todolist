@@ -1,11 +1,11 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 
 type PropsType = {
     addItem: (title: string) => void
 }
 
-const AddItemForm = (props: PropsType) => {
+const AddItemForm = memo((props: PropsType) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState<boolean>(false)
@@ -32,12 +32,6 @@ const AddItemForm = (props: PropsType) => {
 
     return (
         <div>
-            {/*<input*/}
-            {/*    value={title}*/}
-            {/*    onChange={onChangeInputHandler}*/}
-            {/*    onKeyDown={onKeyDownAddTask}*/}
-            {/*    className={error ? "error" : ""}*/}
-            {/*/>*/}
             <TextField id="outlined-basic"
                        label={error ? "Title is required!" : "Add title"}
                        variant="outlined"
@@ -46,17 +40,12 @@ const AddItemForm = (props: PropsType) => {
                        value={title}
                        onChange={onChangeInputHandler}
                        onKeyDown={onKeyDownAddTask}
-                       // className={error ? "error" : ""}
             />
-
-            {/*<button onClick={onClickAddTAsk}>+</button>*/}
             <Button onClick={onClickAddTAsk} variant="contained"
                     style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}
             >+</Button>
-
-            {/*{error && <div style={{color: "red"}}>Title is required!</div>}*/}
         </div>
     );
-};
+})
 
 export default AddItemForm;
