@@ -1,6 +1,7 @@
-import {TasksStateType} from "../App";
 import {v1} from "uuid";
 import {AddTodoListAC, RemoveTodolistACType} from "./todolists-reducer";
+import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import {TasksStateType} from "../AppWithRedux";
 
 
 const initialState: TasksStateType = {}
@@ -10,9 +11,10 @@ export const tasksReducer = (state = initialState, action: ActionType): TasksSta
         case 'REMOVE-TASK':
             return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskID)}
         case 'ADD-TASK':
-            return {...state, [action.todolistId]: [{id: v1(), title: action.title, isDone: false}, ...state[action.todolistId]]}
+            return {...state, [action.todolistId]: [{id: v1(), title: action.title, status: TaskStatuses.New, description: '', todoListId: action.todolistId,
+            startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''}, ...state[action.todolistId]]}
         case 'CHANGE-TASK-STATUS':
-            return {...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskID ? {...t, isDone: action.isDone} : t)}
+            return {...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskID ? {...t, status: action.status} : t)}
         case 'CHANGE-TASK-TITLE':
             return {...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskID ? {...t, title: action.title} : t)}
         case 'ADD-TODOLIST':
@@ -47,8 +49,8 @@ export const addTaskAC = (title: string, todolistId: string) => {
 
 type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>
 
-export const changeTaskStatusAC = (taskID: string, isDone: boolean, todolistId: string) => {
-    return {type: 'CHANGE-TASK-STATUS', taskID, isDone, todolistId} as const
+export const changeTaskStatusAC = (taskID: string, status: TaskStatuses, todolistId: string) => {
+    return {type: 'CHANGE-TASK-STATUS', taskID, status, todolistId} as const
 }
 
 type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleStatusAC>
