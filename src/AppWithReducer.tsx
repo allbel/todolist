@@ -14,7 +14,7 @@ import {
 } from "./state/todolists-reducer";
 import {
     addTaskAC,
-    changeTaskStatusAC,
+    changeTaskAC,
     changeTaskTitleStatusAC,
     removeTaskAC,
     tasksReducer
@@ -76,11 +76,24 @@ function AppWithReducer() {
     }
 
     const addTask = (todolistID: string, title: string) => {
-        dispatchToTasks(addTaskAC(title, todolistID))
+
+        const task: TaskType = {
+            id: v1(),
+            title: title,
+            todoListId: todolistID,
+            priority: TaskPriorities.Low,
+            addedDate: '',
+            order: 0,
+            description: null,
+            deadline: null,
+            startDate: null,
+            status: TaskStatuses.New
+        }
+        dispatchToTasks(addTaskAC(task))
     }
 
     const changeTaskStatus = (todolistID: string, taskID: string, status: TaskStatuses) => {
-        dispatchToTasks(changeTaskStatusAC(taskID, status, todolistID))
+        // dispatchToTasks(changeTaskAC(taskID, status, todolistID))
     }
 
     const changeTaskTitle = (todolistID: string, taskID: string, title: string) => {
