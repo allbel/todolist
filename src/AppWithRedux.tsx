@@ -7,8 +7,8 @@ import {Container, Grid, Paper} from "@mui/material";
 import {
     addTodoListAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, fetchTodosTC, FilterValuesType,
-    removeTodolistAC, TodolistDomainType,
+    changeTodolistTitleAC, createTodoTC, deleteTodosTC, fetchTodosTC, FilterValuesType,
+    removeTodolistAC, TodolistDomainType, updateTodoTitleTC,
 } from "./state/todolists-reducer";
 import {
     addTaskAC,
@@ -36,12 +36,11 @@ function AppWithRedux() {
     }, [])
 
     const removeTodolist = useCallback((todolistID: string) => {
-        const action = removeTodolistAC(todolistID)
-        dispatch(action)
+        dispatch(deleteTodosTC(todolistID))
     }, [dispatch])
 
     const changeTodolistTitle = useCallback((todolistID: string, title: string) => {
-        dispatch(changeTodolistTitleAC(todolistID, title))
+        dispatch(updateTodoTitleTC(todolistID, title))
     }, [dispatch])
 
     const changeFilter = useCallback((todolistID: string, filter: FilterValuesType) => {
@@ -49,7 +48,7 @@ function AppWithRedux() {
     }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodoListAC(title))
+        dispatch(createTodoTC(title))
     }, [dispatch])
 
     const removeTask = useCallback((todolistID: string, taskID: string) => {

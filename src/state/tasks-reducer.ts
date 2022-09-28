@@ -36,7 +36,7 @@ export const tasksReducer = (state = initialState, action: ActionType): TasksSta
                 } : t)
             }
         case 'ADD-TODOLIST':
-            return {...state, [action.payload.todolistId]: []}
+            return {...state, [action.todolist.id]: []}
         case 'REMOVE-TODOLIST':
             // const {[action.id]: [], ...rest} = {...state}
             // return rest
@@ -102,13 +102,13 @@ type UpdateTaskModelType = {
     deadline?: null | string
 }
 
-export const updateTaskTC = (todoId: string, taskId: string, payload: UpdateTaskModelType) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const updateTaskTC = (todoId: string, taskId: string, value: UpdateTaskModelType) => (dispatch: Dispatch, getState: () => AppRootStateType) => {
     const task = getState().tasks[todoId].find(task => task.id === taskId)
 
     if (task) {
         const taskUpdate: UpdateTaskType = {
             ...task,
-            ...payload
+            ...value
         }
         todolistAPI.updateTask(todoId, taskId, taskUpdate)
             .then((res) => {

@@ -66,9 +66,9 @@ function AppWithReducer() {
     }
 
     const addTodolist = (title: string) => {
-        let action = addTodoListAC(title)
-        dispatchToTodolists(action)
-        dispatchToTasks(action)
+        // let action = addTodoListAC(title)
+        // dispatchToTodolists(action)
+        // dispatchToTasks(action)
     }
 
     const removeTask = (todolistID: string, taskID: string) => {

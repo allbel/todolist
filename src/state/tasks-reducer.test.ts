@@ -1,7 +1,7 @@
 import {addTaskAC, changeTaskAC, changeTaskTitleStatusAC, removeTaskAC, tasksReducer} from './tasks-reducer';
 import {TasksStateType} from '../App';
-import {addTodoListAC} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
+import {addTodoListAC, TodolistDomainType} from "./todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from "../api/todolist-api";
 
 
 let startState: TasksStateType
@@ -115,7 +115,15 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const action = addTodoListAC("new todolist");
+    const todo: TodolistDomainType = {
+        id: 'ddsff',
+        title: 'test',
+        filter: "all",
+        order: 0,
+        addedDate: ''
+    }
+
+    const action = addTodoListAC(todo);
 
     const endState = tasksReducer(startState, action)
 
