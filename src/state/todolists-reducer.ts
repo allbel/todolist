@@ -75,7 +75,9 @@ export const changeTodolistFilterAC = (todolistId: string, newFilter: FilterValu
 }
 
 export type FetchTodolistsACType = ReturnType<typeof fetchTodolistsAC>
-export const fetchTodolistsAC = (todos: TodolistType[]) => ({type: 'SET-TODOS', todos} as const)
+
+export const fetchTodolistsAC = (todos: TodolistType[]) =>
+    ({type: 'SET-TODOS', todos} as const)
 
 export const fetchTodosTC = () => (dispatch: Dispatch) => {
     todolistAPI.getTodolists()

@@ -1,6 +1,5 @@
-import {v1} from "uuid";
-import {AddTodoListAC, fetchTodolistsAC, FetchTodolistsACType, RemoveTodolistACType} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskType} from "../api/todolist-api";
+import {AddTodoListAC, FetchTodolistsACType, RemoveTodolistACType} from "./todolists-reducer";
+import {TaskStatuses, TaskType, todolistAPI, UpdateTaskType} from "../api/todolist-api";
 import {TasksStateType} from "../AppWithRedux";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
@@ -70,7 +69,8 @@ export const changeTaskTitleStatusAC = (taskID: string, title: string, todolistI
     return {type: 'CHANGE-TASK-TITLE', taskID, title, todolistId} as const
 }
 
-export const setTasksAC = (todoId: string, tasks: TaskType[]) => ({type: 'SET-TASKS', todoId, tasks} as const)
+export const setTasksAC = (todoId: string, tasks: TaskType[]) =>
+    ({type: 'SET-TASKS', todoId, tasks} as const)
 
 export const fetchTasksTC = (todoId: string) => (dispatch: Dispatch) => {
     todolistAPI.getTasks(todoId)
