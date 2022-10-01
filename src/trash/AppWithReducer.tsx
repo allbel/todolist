@@ -1,25 +1,20 @@
-import React, {useReducer, useState} from 'react';
-import './App.css';
-import TodoList from "./TodoList";
+import React, {useReducer} from 'react';
+import '../app/App.css';
+import TodoList from "../features/TodolistsList/TodoList";
 import {v1} from "uuid";
-import AddItemForm from "./components/AddItemForm";
-import ButtonAppBar from "./components/ButtonAppBar";
+import AddItemForm from "../components/AddItemForm/AddItemForm";
+import ButtonAppBar from "../components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
 import {
     addTodoListAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
+    changeTodolistTitleAC,
+    FilterValuesType,
     removeTodolistAC,
     todolistsReducer
-} from "./state/todolists-reducer";
-import {
-    addTaskAC,
-    changeTaskAC,
-    changeTaskTitleStatusAC,
-    removeTaskAC,
-    tasksReducer
-} from "./state/tasks-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
+} from "../features/TodolistsList/todolists-reducer";
+import {addTaskAC, removeTaskAC, tasksReducer} from "../features/TodolistsList/tasks-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 
 
 export type TasksStateType = {
@@ -66,9 +61,14 @@ function AppWithReducer() {
     }
 
     const addTodolist = (title: string) => {
-        // let action = addTodoListAC(title)
-        // dispatchToTodolists(action)
-        // dispatchToTasks(action)
+        let action = addTodoListAC({
+            id: v1(),
+            title: "What to learn",
+            addedDate: '',
+            order: 0}
+        )
+        dispatchToTodolists(action)
+        dispatchToTasks(action)
     }
 
     const removeTask = (todolistID: string, taskID: string) => {
@@ -97,7 +97,7 @@ function AppWithReducer() {
     }
 
     const changeTaskTitle = (todolistID: string, taskID: string, title: string) => {
-        dispatchToTasks(changeTaskTitleStatusAC(taskID, title, todolistID))
+        // dispatchToTasks(changeTaskAC())
     }
 
     return (

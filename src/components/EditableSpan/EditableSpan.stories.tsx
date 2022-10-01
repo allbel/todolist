@@ -1,8 +1,8 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import {action} from "@storybook/addon-actions";
-import Task from "../components/Task";
-import {EditableSpan} from "../components/EditableSpan";
+import Task from "../../features/TodolistsList/Todolist/Task/Task";
+import {EditableSpan} from "./EditableSpan";
 
 export default {
     title: 'Todolist/EditableSpan',

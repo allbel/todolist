@@ -1,0 +1,22 @@
+.App {
+    /*padding: 30px;*/
+    /*display: flex;*/
+}
+
+.isDone {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.active {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border: 2px solid green;
+    border-radius: 5px;
+}
+
+.error {
+    border: 3px solid red;
+    outline: none;
+}
