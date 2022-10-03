@@ -3,14 +3,14 @@ import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "../../app/store";
 import {
     changeTodolistFilterAC,
-    createTodoTC,
-    deleteTodoTC,
+    addTodoTC,
+    removeTodoTC,
     fetchTodosTC,
     FilterValuesType,
     TodolistDomainType,
     updateTodoTitleTC
 } from "./todolists-reducer";
-import {createTaskTC, deleteTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
+import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolist-api";
 import {Grid, Paper} from "@mui/material";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
@@ -28,7 +28,7 @@ export const TodolistsList: React.FC = () => {
     }, [])
 
     const removeTodolist = useCallback((todolistID: string) => {
-        dispatch(deleteTodoTC(todolistID))
+        dispatch(removeTodoTC(todolistID))
     }, [dispatch])
 
     const changeTodolistTitle = useCallback((todolistID: string, title: string) => {
@@ -40,15 +40,15 @@ export const TodolistsList: React.FC = () => {
     }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(createTodoTC(title))
+        dispatch(addTodoTC(title))
     }, [dispatch])
 
     const removeTask = useCallback((todolistID: string, taskID: string) => {
-        dispatch(deleteTaskTC(todolistID, taskID))
+        dispatch(removeTaskTC(todolistID, taskID))
     }, [dispatch])
 
     const addTask = useCallback((todolistID: string, title: string) => {
-        dispatch(createTaskTC(todolistID, title))
+        dispatch(addTaskTC(todolistID, title))
     }, [dispatch])
 
     const changeTaskStatus = useCallback((todolistID: string, taskID: string, status: TaskStatuses) => {
@@ -75,6 +75,7 @@ export const TodolistsList: React.FC = () => {
                                     <TodoList
                                         todolistID={tl.id}
                                         title={tl.title}
+                                        entityStatus={tl.entityStatus}
                                         tasks={tasks[tl.id]}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}

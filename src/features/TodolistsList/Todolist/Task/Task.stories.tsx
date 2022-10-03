@@ -19,11 +19,11 @@ const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 export const TaskIsDoneStory = Template.bind({});
 TaskIsDoneStory.args = {
     task: {id: 'fds', title: 'JS', status: TaskStatuses.Completed, description: '', todoListId: 'todolistID1',
-        startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''},
+        startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"},
 };
 
 export const TaskIsNotDoneStory = Template.bind({});
 TaskIsNotDoneStory.args = {
     task: {id: 'fdsfd', title: 'HTML', status: TaskStatuses.New, description: '', todoListId: 'todolistID1',
-        startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''},
+        startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"},
 };

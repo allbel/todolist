@@ -2,10 +2,9 @@ import {
     addTaskAC,
     changeTaskAC,
     changeTaskTitleStatusAC,
-    removeTaskAC, setTasksAC,
-    tasksReducer
+    removeTaskAC, setTasksAC, TaskDomainType,
+    tasksReducer, TasksStateType
 } from './tasks-reducer';
-import {TasksStateType} from '../../trash/App';
 import {addTodoListAC, fetchTodolistsAC, TodolistDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/todolist-api";
 
@@ -16,19 +15,19 @@ beforeEach(() => {
     startState = {
         "todolistId1": [
             { id: "1", title: "CSS", status: TaskStatuses.New, description: '', todoListId: "todolistId1",
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '' },
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle" },
             { id: "2", title: "JS", status: TaskStatuses.Completed, description: '', todoListId: "todolistId1",
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '' },
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle" },
             { id: "3", title: "React", status: TaskStatuses.New, description: '', todoListId: "todolistId1",
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '' }
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle" }
         ],
         "todolistId2": [
             { id: "1", title: "bread", status: TaskStatuses.New, description: '', todoListId: "todolistId2",
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '' },
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle" },
             { id: "2", title: "milk", status: TaskStatuses.Completed, description: '', todoListId: "todolistId2",
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '' },
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle" },
             { id: "3", title: "tea", status: TaskStatuses.New, description: '', todoListId: "todolistId2",
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '' }
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle" }
         ]
     };
 })
@@ -126,7 +125,8 @@ test('new array should be added when new todolist is added', () => {
         title: 'test',
         filter: "all",
         order: 0,
-        addedDate: ''
+        addedDate: '',
+        entityStatus: "idle"
     }
 
     const action = addTodoListAC(todo);

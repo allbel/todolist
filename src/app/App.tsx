@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import ButtonAppBar from "../components/ButtonAppBar";
-import {Container} from "@mui/material";
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import Container from "@mui/material/Container";
 
 function App() {
     return (
@@ -14,6 +14,5 @@ function App() {
         </div>
     );
 }
-
 
 export default App;

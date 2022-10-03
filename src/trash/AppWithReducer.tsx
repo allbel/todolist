@@ -17,32 +17,28 @@ import {addTaskAC, removeTaskAC, tasksReducer} from "../features/TodolistsList/t
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 
 
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
-
 function AppWithReducer() {
 
     let todolistID1 = v1();
     let todolistID2 = v1();
 
     let [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
-        {id: todolistID1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-        {id: todolistID2, title: 'What to buy', filter: 'all', addedDate: '', order: 0},
+        {id: todolistID1, title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: "idle"},
+        {id: todolistID2, title: 'What to buy', filter: 'all', addedDate: '', order: 0, entityStatus: "idle"},
     ])
 
     let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todolistID1]: [
             {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, description: '', todoListId: todolistID1,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''},
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"},
             {id: v1(), title: "JS", status: TaskStatuses.New, description: '', todoListId: todolistID1,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''},
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"},
         ],
         [todolistID2]: [
             {id: v1(), title: "HTML&CSS2", status: TaskStatuses.Completed, description: '', todoListId: todolistID2,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''},
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"},
             {id: v1(), title: "JS2", status: TaskStatuses.New, description: '', todoListId: todolistID2,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''},
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"},
         ]
     });
 
@@ -130,6 +126,7 @@ function AppWithReducer() {
                                         key={tl.id}
                                         todolistID={tl.id}
                                         title={tl.title}
+                                        entityStatus={tl.entityStatus}
                                         tasks={tasksForRender}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}

@@ -4,16 +4,18 @@ import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Task from "./Todolist/Task/Task";
-import {TaskStatuses, TaskType} from "../../api/todolist-api";
+import {TaskStatuses} from "../../api/todolist-api";
 import {FilterValuesType} from "./todolists-reducer";
 import {useAppDispatch} from "../../app/store";
-import {fetchTasksTC} from "./tasks-reducer";
+import {fetchTasksTC, TaskDomainType} from "./tasks-reducer";
+import {RequestStatusType} from "../../app/app-reducer";
 
 
 type TodoListPropsType = {
     todolistID: string
     title: string
-    tasks: Array<TaskType>
+    entityStatus: RequestStatusType
+    tasks: Array<TaskDomainType>
     filter: FilterValuesType
     removeTodolist: (todolistID: string) => void
     changeTodolistTitle: (todolistID: string, title: string) => void
@@ -60,7 +62,9 @@ const TodoList = memo((props: TodoListPropsType) => {
                     task={task}
                     removeTask={removeTask}
                     changeTaskStatus={changeTaskStatus}
-                    changeTaskTitle={changeTaskTitle}/>
+                    changeTaskTitle={changeTaskTitle}
+                    disabled={props.entityStatus === 'loading'}
+                />
             )
         }) : <span>TaskList is empty</span>
 
@@ -80,13 +84,13 @@ const TodoList = memo((props: TodoListPropsType) => {
     return (
         <div>
             <h3>
-                <EditableSpan title={props.title} callBack={changeTodolistTitle}/>
-                <IconButton aria-label="delete" onClick={onClickRemoveTodolist}>
+                <EditableSpan title={props.title} callBack={changeTodolistTitle} disabled={props.entityStatus === 'loading'}/>
+                <IconButton aria-label="delete" onClick={onClickRemoveTodolist} disabled={props.entityStatus === 'loading'}>
                     <Delete/>
                 </IconButton>
             </h3>
 
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} disabled={props.entityStatus === 'loading'}/>
 
             <ul>
                 {tasksListItems}

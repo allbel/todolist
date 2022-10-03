@@ -3,6 +3,7 @@ import {Button, TextField} from "@mui/material";
 
 type PropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 const AddItemForm = memo((props: PropsType) => {
@@ -41,7 +42,7 @@ const AddItemForm = memo((props: PropsType) => {
                        onChange={onChangeInputHandler}
                        onKeyDown={onKeyDownAddTask}
             />
-            <Button onClick={onClickAddTAsk} variant="contained"
+            <Button onClick={onClickAddTAsk} variant="contained" disabled={props.disabled}
                     style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}
             >+</Button>
         </div>

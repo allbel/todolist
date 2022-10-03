@@ -7,11 +7,7 @@ import ButtonAppBar from "../components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 import {FilterValuesType, TodolistDomainType} from "../features/TodolistsList/todolists-reducer";
-
-
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
+import {TasksStateType} from "../features/TodolistsList/tasks-reducer";
 
 function App() {
 
@@ -19,29 +15,29 @@ function App() {
     let todolistID2 = v1();
 
     let [todolists, setTodolists] = useState<Array<TodolistDomainType>>([
-        {id: todolistID1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-        {id: todolistID2, title: 'What to buy', filter: 'all', addedDate: '', order: 0},
+        {id: todolistID1, title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: "idle"},
+        {id: todolistID2, title: 'What to buy', filter: 'all', addedDate: '', order: 0, entityStatus: "idle"},
     ])
 
     let [tasks, setTasks] = useState<TasksStateType>({
         [todolistID1]: [
             {
                 id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, description: '', todoListId: todolistID1,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"
             },
             {
                 id: v1(), title: "JS", status: TaskStatuses.Completed, description: '', todoListId: todolistID1,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"
             },
         ],
         [todolistID2]: [
             {
                 id: v1(), title: "HTML&CSS2", status: TaskStatuses.Completed, description: '', todoListId: todolistID2,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"
             },
             {
                 id: v1(), title: "JS2", status: TaskStatuses.Completed, description: '', todoListId: todolistID2,
-                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''
+                startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"
             },
         ]
     });
@@ -63,7 +59,7 @@ function App() {
         setTasks({
             ...tasks,
             [todolistID]: [{id: v1(), title, status: TaskStatuses.New, description: '', todoListId: todolistID,
-            startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: ''}, ...tasks[todolistID]]
+            startDate: '', deadline: '', order: 0, priority: TaskPriorities.Low, addedDate: '', entityStatus: "idle"}, ...tasks[todolistID]]
         })
     }
 
@@ -80,7 +76,7 @@ function App() {
     }
 
     const addTodolist = (title: string) => {
-        const newTodolist: TodolistDomainType = {id: v1(), title, filter: 'all', addedDate: '', order: 0}
+        const newTodolist: TodolistDomainType = {id: v1(), title, filter: 'all', addedDate: '', order: 0, entityStatus: "idle"}
         setTodolists([newTodolist, ...todolists])
         setTasks({...tasks, [newTodolist.id]: []})
     }
@@ -115,6 +111,7 @@ function App() {
                                         key={tl.id}
                                         todolistID={tl.id}
                                         title={tl.title}
+                                        entityStatus={tl.entityStatus}
                                         tasks={tasksForRender}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
