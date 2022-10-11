@@ -3,9 +3,9 @@ import {Dispatch} from "redux";
 import {
     RequestStatusType,
     setAppErrorAC,
-    setAppErrorACType,
+    SetAppErrorAСType,
     setAppStatusAC,
-    setAppStatusACType
+    SetAppStatusAСType
 } from "../../app/app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
@@ -119,8 +119,8 @@ export const updateTodoTitleTC = (todoId: string, title: string) => (dispatch: D
 
 type ActionsType = RemoveTodolistACType | AddTodoListAC
     | ChangeTodolistTitleAC | ChangeTodolistFilterAC
-    | FetchTodolistsACType | setAppStatusACType
-    | setAppErrorACType | ReturnType<typeof changeTodolistStatusAC>
+    | FetchTodolistsACType | SetAppStatusAСType
+    | SetAppErrorAСType | ReturnType<typeof changeTodolistStatusAC>
 
 export type RemoveTodolistACType = ReturnType<typeof removeTodolistAC>
 export type AddTodoListAC = ReturnType<typeof addTodoListAC>

@@ -1,8 +1,15 @@
+import {Dispatch} from "redux";
+import {authAPI} from "../api/todolist-api";
+import {setIsLoggedInAC} from "../features/Login/auth-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {AxiosError} from "axios";
+
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     status: 'idle' as RequestStatusType,
-    error: null as null | string
+    error: null as null | string,
+    isInitialized: false as boolean
 }
 
 type InitialStateType = typeof initialState
@@ -13,6 +20,8 @@ export const appReducer = (state: InitialStateType = initialState, action: AppAc
             return {...state, status: action.status}
         case 'APP/SET-ERROR':
             return {...state, error: action.error}
+        case 'APP/INITIALIZED':
+            return {...state, isInitialized: action.isInitialized}
         default:
             return state
     }
@@ -24,7 +33,28 @@ export const setAppStatusAC = (status: RequestStatusType) =>
 export const setAppErrorAC = (error: null | string) =>
     ({type: 'APP/SET-ERROR', error} as const)
 
-export type AppActionsType = setAppStatusACType | setAppErrorACType
+export const setisInitializedAC = (isInitialized: boolean) =>
+    ({type: 'APP/INITIALIZED', isInitialized} as const)
 
-export type setAppStatusACType = ReturnType<typeof setAppStatusAC>
-export type setAppErrorACType = ReturnType<typeof setAppErrorAC>
+export const initializeAppTC = () => (dispatch: Dispatch) => {
+    authAPI.me()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(true));
+                dispatch(setisInitializedAC(true));
+            } else {
+                handleServerAppError(dispatch, res.data)
+            }
+        }).catch((e: AxiosError) => {
+            handleServerNetworkError(dispatch, e)
+        }).finally(() => {
+            dispatch(setisInitializedAC(true));
+        })
+}
+
+
+export type AppActionsType = SetAppStatusAСType | SetAppErrorAСType | SetAppInitializedAСType
+
+export type SetAppStatusAСType = ReturnType<typeof setAppStatusAC>
+export type SetAppErrorAСType = ReturnType<typeof setAppErrorAC>
+export type SetAppInitializedAСType = ReturnType<typeof setisInitializedAC>

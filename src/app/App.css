@@ -20,3 +20,8 @@
     border: 3px solid red;
     outline: none;
 }
+
+.linearProgress {
+    position: fixed;
+    width: 100%;
+}

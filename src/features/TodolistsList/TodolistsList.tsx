@@ -12,18 +12,22 @@ import {
 } from "./todolists-reducer";
 import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolist-api";
-import {Grid, Paper} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import TodoList from "./TodoList";
+import {Navigate} from "react-router-dom";
 
 export const TodolistsList: React.FC = () => {
 
-    let todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-    let tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     // const dispatch = useDispatch()
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        if (!isLoggedIn) return
         dispatch(fetchTodosTC())
     }, [])
 
@@ -59,6 +63,9 @@ export const TodolistsList: React.FC = () => {
         dispatch(updateTaskTC(todolistID, taskID, {title}))
     }, [dispatch])
 
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
 
     return (
         <>

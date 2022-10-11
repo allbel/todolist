@@ -2,7 +2,7 @@ import {AddTodoListAC, FetchTodolistsACType, FilterValuesType, RemoveTodolistACT
 import {TaskStatuses, TaskType, todolistAPI, TodolistType, UpdateTaskType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../app/store";
-import {RequestStatusType, setAppErrorACType, setAppStatusAC, setAppStatusACType} from "../../app/app-reducer";
+import {RequestStatusType, SetAppErrorAСType, setAppStatusAC, SetAppStatusAСType} from "../../app/app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
@@ -152,7 +152,7 @@ type ActionsType = ReturnType<typeof removeTaskAC> | ReturnType<typeof addTaskAC
     | ReturnType<typeof changeTaskAC> | ReturnType<typeof changeTaskTitleStatusAC>
     | ReturnType<typeof setTasksAC>
     | AddTodoListAC | RemoveTodolistACType | FetchTodolistsACType
-    | setAppStatusACType | setAppErrorACType
+    | SetAppStatusAСType | SetAppErrorAСType
     | ReturnType<typeof changeTaskStatusAC>
 
 type UpdateTaskModelType = {

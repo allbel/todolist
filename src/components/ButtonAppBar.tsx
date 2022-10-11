@@ -8,17 +8,20 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LinearProgress from "@mui/material/LinearProgress";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../app/store";
+import {AppRootStateType, useAppDispatch} from "../app/store";
 import {RequestStatusType} from "../app/app-reducer";
 import ErrorSnackbars from "./ErrorSnackbar/ErrorSnackbar";
+import {logoutTC} from "../features/Login/auth-reducer";
 
 export default function ButtonAppBar() {
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            {status === 'loading' && <LinearProgress color="secondary" />}
+            {status === 'loading' && <div className={'linearProgress'}><LinearProgress color="secondary" /></div>}
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -28,12 +31,12 @@ export default function ButtonAppBar() {
                         aria-label="menu"
                         sx={{ mr: 2 }}
                     >
-                        <MenuIcon />
+                        {/*<MenuIcon />*/}
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        News
+                        Todo Lists
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isLoggedIn && <Button color="inherit" onClick={() => dispatch(logoutTC())}>Log out</Button>}
                 </Toolbar>
             </AppBar>
             <ErrorSnackbars/>
