@@ -3,6 +3,7 @@ import {authAPI} from "../api/todolist-api";
 import {setIsLoggedInAC} from "../features/Login/auth-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {AxiosError} from "axios";
+import {AppRootStateType} from "./store";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -36,14 +37,17 @@ export const setAppErrorAC = (error: null | string) =>
 export const setisInitializedAC = (isInitialized: boolean) =>
     ({type: 'APP/INITIALIZED', isInitialized} as const)
 
-export const initializeAppTC = () => (dispatch: Dispatch) => {
+export const initializeAppTC = () => (dispatch: Dispatch, getState: () => AppRootStateType) => {
     authAPI.me()
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true));
                 dispatch(setisInitializedAC(true));
             } else {
-                handleServerAppError(dispatch, res.data)
+                const isLoggedIn = getState().auth.isLoggedIn;
+                if (isLoggedIn) {
+                    handleServerAppError(dispatch, res.data);
+                }
             }
         }).catch((e: AxiosError) => {
             handleServerNetworkError(dispatch, e)
