@@ -1,7 +1,7 @@
 import React, {memo, useCallback, useEffect} from 'react';
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
-import {Button, Checkbox, IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import Task from "./Todolist/Task/Task";
 import {TaskStatuses} from "../../api/todolist-api";

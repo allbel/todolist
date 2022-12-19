@@ -1,4 +1,10 @@
-import {AddTodoListAC, FetchTodolistsACType, RemoveTodolistACType} from "./todolists-reducer";
+import {
+    addTodoListAC,
+    AddTodoListAC,
+    fetchTodolistsAC,
+    FetchTodolistsACType, removeTodolistAC,
+    RemoveTodolistACType
+} from "./todolists-reducer";
 import {TaskStatuses, TaskType, todolistAPI, UpdateTaskType} from "../../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../app/store";
@@ -13,9 +19,9 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
     switch (action.type) {
         case "SET-TASKS":
             return {...state, [action.todoId]: action.tasks.map(t => ({...t, entityStatus: "idle"}))}
-        case "SET-TODOS":
+        case fetchTodolistsAC.type:
             const stateCopy = {...state}
-            action.todos.forEach((todo) => {
+            action.payload.todos.forEach((todo) => {
                 stateCopy[todo.id] = []
             })
             return stateCopy
@@ -38,13 +44,13 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
         case 'TODO/CHANGE-TASK-STATUS':
             return {...state, [action.todolistId]: state[action.todolistId]
                     .map(t => t.id === action.taskID ? {...t, entityStatus: action.entityStatus} : t)}
-        case 'ADD-TODOLIST':
-            return {...state, [action.todolist.id]: []}
-        case 'REMOVE-TODOLIST':
+        case addTodoListAC.type:
+            return {...state, [action.payload.todolist.id]: []}
+        case removeTodolistAC.type:
             // const {[action.id]: [], ...rest} = {...state}
             // return rest
             let copyState = {...state}
-            delete copyState[action.todolistId]
+            delete copyState[action.payload.todolistId]
             return copyState
         default:
             return state

@@ -42,27 +42,29 @@ function AppWithReducer() {
         ]
     });
 
-    const removeTodolist = (todolistID: string) => {
-        const action = removeTodolistAC(todolistID)
+    const removeTodolist = (todolistId: string) => {
+        const action = removeTodolistAC({todolistId})
         dispatchToTodolists(action)
         dispatchToTasks(action)
     }
 
-    const changeTodolistTitle = (todolistID: string, title: string) => {
-        dispatchToTodolists(changeTodolistTitleAC(todolistID, title))
+    const changeTodolistTitle = (todolistId: string, title: string) => {
+        dispatchToTodolists(changeTodolistTitleAC({todolistId, title}))
     }
 
-    const changeFilter = (todolistID: string, filter: FilterValuesType) => {
-        dispatchToTodolists(changeTodolistFilterAC(todolistID, filter))
+    const changeFilter = (todolistId: string, filter: FilterValuesType) => {
+        dispatchToTodolists(changeTodolistFilterAC({todolistId, filter}))
     }
 
     const addTodolist = (title: string) => {
         let action = addTodoListAC({
-            id: v1(),
-            title: "What to learn",
-            addedDate: '',
-            order: 0}
-        )
+            todolist: {
+                id: v1(),
+                title: "What to learn",
+                addedDate: '',
+                order: 0
+            }
+        })
         dispatchToTodolists(action)
         dispatchToTasks(action)
     }

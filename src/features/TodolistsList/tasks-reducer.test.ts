@@ -120,7 +120,7 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const todo: TodolistDomainType = {
+    const todolist: TodolistDomainType = {
         id: 'ddsff',
         title: 'test',
         filter: "all",
@@ -129,7 +129,7 @@ test('new array should be added when new todolist is added', () => {
         entityStatus: "idle"
     }
 
-    const action = addTodoListAC(todo);
+    const action = addTodoListAC({todolist});
 
     const endState = tasksReducer(startState, action)
 
@@ -146,10 +146,10 @@ test('new array should be added when new todolist is added', () => {
 
 test('property arrays should be added when set todolists', () => {
 
-    const action = fetchTodolistsAC([
+    const action = fetchTodolistsAC({todos: [
         {id: '1', title: 'title 1', order: 0, addedDate: ''},
         {id: '2', title: 'title 2', order: 0, addedDate: ''},
-    ]);
+    ]});
 
     const endState = tasksReducer({}, action)
 
