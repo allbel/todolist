@@ -1,7 +1,7 @@
 import {
     addTaskAC,
     changeTaskAC,
-    changeTaskTitleStatusAC,
+    changeTaskTitleAC,
     removeTaskAC, setTasksAC, TaskDomainType,
     tasksReducer, TasksStateType
 } from './tasks-reducer';
@@ -34,7 +34,7 @@ beforeEach(() => {
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = removeTaskAC("todolistId2", "2");
+    const action = removeTaskAC({todolistId: "todolistId2", taskID: "2"});
 
     const endState = tasksReducer(startState, action)
 
@@ -72,7 +72,7 @@ test('correct task should be added to correct array', () => {
         status: TaskStatuses.New
     }
 
-    const action = addTaskAC(task);
+    const action = addTaskAC({task});
 
     const endState = tasksReducer(startState, action)
 
@@ -99,7 +99,7 @@ test('status of specified task should be changed', () => {
         status: TaskStatuses.Completed
     }
 
-    const action = changeTaskAC(task);
+    const action = changeTaskAC({task});
 
     const endState = tasksReducer(startState, action)
 
@@ -109,7 +109,7 @@ test('status of specified task should be changed', () => {
 
 test('title of specified task should be changed', () => {
 
-    const action = changeTaskTitleStatusAC("2", "newTitle", "todolistId2");
+    const action = changeTaskTitleAC({taskID: "2", title: "newTitle", todolistId: "todolistId2"});
 
     const endState = tasksReducer(startState, action)
 
@@ -163,7 +163,7 @@ test('property arrays should be added when set todolists', () => {
 
 test('tasks should be added for todolist', () => {
 
-    const action = setTasksAC('todolistId1', startState['todolistId1']);
+    const action = setTasksAC({todoId: 'todolistId1', tasks: startState['todolistId1']});
 
     const endState = tasksReducer({
         todolistId1: [],

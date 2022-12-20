@@ -69,8 +69,8 @@ function AppWithReducer() {
         dispatchToTasks(action)
     }
 
-    const removeTask = (todolistID: string, taskID: string) => {
-        dispatchToTasks(removeTaskAC(taskID, todolistID))
+    const removeTask = (todolistId: string, taskID: string) => {
+        dispatchToTasks(removeTaskAC({taskID, todolistId}))
     }
 
     const addTask = (todolistID: string, title: string) => {
@@ -87,7 +87,7 @@ function AppWithReducer() {
             startDate: null,
             status: TaskStatuses.New
         }
-        dispatchToTasks(addTaskAC(task))
+        dispatchToTasks(addTaskAC({task}))
     }
 
     const changeTaskStatus = (todolistID: string, taskID: string, status: TaskStatuses) => {
