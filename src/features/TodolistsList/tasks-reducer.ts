@@ -25,8 +25,8 @@ const slice = createSlice({
             }
             // return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskID)}
         },
-        addTaskAC(state, action: PayloadAction<{task: TaskType}>) {
-            state[action.payload.task.todoListId].unshift({...action.payload.task, entityStatus: "idle"})
+        addTaskAC(state, action: PayloadAction<TaskType>) {
+            state[action.payload.todoListId].unshift({...action.payload, entityStatus: "idle"})
             // return {...state, [action.task.todoListId]: [{...action.task, entityStatus: "idle"}, ...state[action.task.todoListId]]}
         },
         changeTaskAC(state, action: PayloadAction<{task: TaskType}>) {
@@ -126,7 +126,7 @@ export const addTaskTC = (todoId: string, title: string) => (dispatch: Dispatch)
     todolistAPI.createTask(todoId, title)
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(addTaskAC({task: res.data.data.item}))
+                dispatch(addTaskAC(res.data.data.item))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(dispatch, res.data)

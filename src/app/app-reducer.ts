@@ -15,6 +15,8 @@ const initialState = {
     isInitialized: false
 }
 
+export type AppInitialState = typeof initialState
+
 const slice = createSlice({
     name: 'app',
     initialState: initialState,

@@ -87,7 +87,7 @@ function AppWithReducer() {
             startDate: null,
             status: TaskStatuses.New
         }
-        dispatchToTasks(addTaskAC({task}))
+        dispatchToTasks(addTaskAC(task))
     }
 
     const changeTaskStatus = (todolistID: string, taskID: string, status: TaskStatuses) => {
