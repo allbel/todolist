@@ -1,4 +1,12 @@
-import {addTaskAC, changeTaskAC, changeTaskTitleAC, removeTaskAC, tasksReducer, TasksStateType} from './tasks-reducer';
+import {
+    addTaskAC,
+    changeTaskAC,
+    changeTaskTitleAC,
+    fetchTasksTC,
+    removeTaskAC,
+    tasksReducer,
+    TasksStateType
+} from './tasks-reducer';
 import {addTodoListAC, fetchTodolistsAC, TodolistDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/todolist-api";
 
@@ -154,16 +162,19 @@ test('property arrays should be added when set todolists', () => {
     expect(endState['2']).toStrictEqual([]);
 });
 
-// test('tasks should be added for todolist', () => {
-//
-//     const action = setTasksAC({todoId: 'todolistId1', tasks: startState['todolistId1']});
-//
-//     const endState = tasksReducer({
-//         todolistId1: [],
-//         todolistId2: [],
-//     }, action)
-//
-//
-//     expect(endState['todolistId1'].length).toBe(3);
-//     expect(endState['todolistId2'].length).toBe(0);
-// });
+test('tasks should be added for todolist', () => {
+
+    // const action = setTasksAC({todoId: 'todolistId1', tasks: startState['todolistId1']});
+    const action = fetchTasksTC.fulfilled(
+        {todoId: 'todolistId1', tasks: startState['todolistId1']}, '', 'todolistId1'
+    );
+
+    const endState = tasksReducer({
+        todolistId1: [],
+        todolistId2: [],
+    }, action)
+
+
+    expect(endState['todolistId1'].length).toBe(3);
+    expect(endState['todolistId2'].length).toBe(0);
+});
