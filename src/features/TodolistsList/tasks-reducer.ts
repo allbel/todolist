@@ -14,17 +14,16 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 const initialState: TasksStateType = {}
 
-export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', (todoId: string, thunkAPI) => {
+export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', async (todoId: string, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
-    return todolistAPI.getTasks(todoId)
-        .then((res) => {
-            // thunkAPI.dispatch(setTasksAC({todoId, tasks: res.data.items}))
-            thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
-            return {todoId, tasks: res.data.items};
-        })
-        //     .catch((e: AxiosError) => {
-        //     handleServerNetworkError(thunkAPI.dispatch, e)
-        // })
+    const res = await todolistAPI.getTasks(todoId)
+    thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
+    // thunkAPI.dispatch(setTasksAC({todoId, tasks: res.data.items}))
+    return {todoId, tasks: res.data.items};
+
+    //     .catch((e: AxiosError) => {
+    //     handleServerNetworkError(thunkAPI.dispatch, e)
+    // })
 })
 
 export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', (param: {todolistId: string, taskID: string}, thunkAPI) => {
