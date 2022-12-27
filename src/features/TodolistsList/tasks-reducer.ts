@@ -26,11 +26,11 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasksTC', async (todoId
     // })
 })
 
-export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', (param: {todolistId: string, taskID: string}, thunkAPI) => {
+export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', async (param: {todolistId: string, taskID: string}, thunkAPI) => {
     thunkAPI.dispatch(setAppStatusAC({status: 'loading'}))
     thunkAPI.dispatch(changeTaskStatusAC({todolistId: param.todolistId, taskID: param.taskID, entityStatus: 'loading'}))
-    return todolistAPI.deleteTask(param.todolistId, param.taskID)
-        .then((res) => {
+    await todolistAPI.deleteTask(param.todolistId, param.taskID)
+        // .then((res) => {
             // if (res.data.resultCode === 0) {
                 thunkAPI.dispatch(setAppStatusAC({status: 'succeeded'}))
                 // thunkAPI.dispatch(removeTaskAC({todolistId: param.todolistId, taskID: param.taskID}))
@@ -38,7 +38,7 @@ export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', (param: {todo
             // } else {
             //     handleServerAppError(thunkAPI.dispatch, res.data)
             // }
-        })
+        // })
         // .catch((e: AxiosError) => {
         // handleServerNetworkError(thunkAPI.dispatch, e)
     // })

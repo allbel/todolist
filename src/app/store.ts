@@ -25,7 +25,8 @@ export const store = configureStore({
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<RootReducerType>
 
-type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, Action>
+// type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, Action>
+type AppDispatchType = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatchType>()
 
 // @ts-ignore
