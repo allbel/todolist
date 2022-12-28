@@ -5,7 +5,7 @@ import {
     tasksReducer,
     TasksStateType, updateTaskTC
 } from './tasks-reducer';
-import {addTodoListAC, fetchTodolistsAC, TodolistDomainType} from "./todolists-reducer";
+import {addTodoListAC, fetchTodosTC, TodolistDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/todolist-api";
 
 
@@ -148,10 +148,10 @@ test('new array should be added when new todolist is added', () => {
 
 test('property arrays should be added when set todolists', () => {
 
-    const action = fetchTodolistsAC({todos: [
+    const action = fetchTodosTC.fulfilled({todos: [
         {id: '1', title: 'title 1', order: 0, addedDate: ''},
         {id: '2', title: 'title 2', order: 0, addedDate: ''},
-    ]});
+    ]}, 'requestId');
 
     const endState = tasksReducer({}, action)
 

@@ -1,7 +1,7 @@
 import {
     addTodoListAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, fetchTodolistsAC, FilterValuesType,
+    changeTodolistTitleAC, fetchTodosTC, FilterValuesType,
     removeTodolistAC, TodolistDomainType,
     todolistsReducer
 } from './todolists-reducer';
@@ -79,7 +79,7 @@ test('correct filter of todolist should be changed', () => {
 });
 
 test('todos should be set to the state', () => {
-    const action = fetchTodolistsAC({todos: startState})
+    const action = fetchTodosTC.fulfilled({todos: startState}, 'requestId')
 
     const endState = todolistsReducer([], action);
 

@@ -1,8 +1,4 @@
-import {
-    addTodoListAC,
-    fetchTodolistsAC,
-    removeTodolistAC
-} from "./todolists-reducer";
+import {addTodoListAC, fetchTodosTC, removeTodolistAC} from "./todolists-reducer";
 import {TaskStatuses, TaskType, todolistAPI, UpdateTaskType} from "../../api/todolist-api";
 import {AppRootStateType} from "../../app/store";
 import {RequestStatusType, setAppStatusAC} from "../../app/app-reducer";
@@ -81,8 +77,8 @@ export const updateTaskTC = createAsyncThunk(
 
         const taskUpdate: UpdateTaskType = {...task, ...value}
 
-        const res = await todolistAPI.updateTask(todolistId, taskID, taskUpdate)
         try {
+            const res = await todolistAPI.updateTask(todolistId, taskID, taskUpdate)
             if (res.data.resultCode === 0) {
                 dispatch(setAppStatusAC({status: 'succeeded'}))
                 dispatch(changeTaskStatusAC({todolistId, taskID, entityStatus: 'succeeded'}))
@@ -136,7 +132,7 @@ const slice = createSlice({
             //    delete copyState[action.payload.todolistId]
             //    return copyState
         })
-        builder.addCase(fetchTodolistsAC, (state, action) => {
+        builder.addCase(fetchTodosTC.fulfilled, (state, action) => {
             action.payload.todos.forEach((todo) => {
                 state[todo.id] = []
             })
