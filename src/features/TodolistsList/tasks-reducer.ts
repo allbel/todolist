@@ -44,22 +44,24 @@ export const removeTaskTC = createAsyncThunk('tasks/removeTaskTC', async (param:
     // })
 })
 
-
-// thunks
-export const addTaskTC = (todoId: string, title: string) => (dispatch: Dispatch) => {
+export const addTaskTC = createAsyncThunk('tasks/addTaskTC', async ({todoId, title}: {todoId: string, title: string}, {dispatch, rejectWithValue}) => {
     dispatch(setAppStatusAC({status: 'loading'}))
-    todolistAPI.createTask(todoId, title)
-        .then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(addTaskAC(res.data.data.item))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
-            } else {
-                handleServerAppError(dispatch, res.data)
-            }
-        }).catch((e: AxiosError) => {
-        handleServerNetworkError(dispatch, e)
-    })
-}
+    try {
+        const res = await todolistAPI.createTask(todoId, title)
+        if (res.data.resultCode === 0) {
+            dispatch(setAppStatusAC({status: 'succeeded'}))
+            // dispatch(addTaskAC(res.data.data.item))
+            return res.data.data.item
+        } else {
+            handleServerAppError(dispatch, res.data)
+            return rejectWithValue(null)
+        }
+    } catch(err) {
+        const error = err as Error | AxiosError
+        handleServerNetworkError(dispatch, error)
+        return rejectWithValue(null)
+    }
+})
 
 export const updateTaskTC = (todolistId: string, taskID: string, value: UpdateTaskModelType) =>
     (dispatch: Dispatch, getState: () => AppRootStateType) => {
@@ -101,10 +103,10 @@ const slice = createSlice({
         //     }
         //     // return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskID)}
         // },
-        addTaskAC(state, action: PayloadAction<TaskType>) {
-            state[action.payload.todoListId].unshift({...action.payload, entityStatus: "idle"})
-            // return {...state, [action.task.todoListId]: [{...action.task, entityStatus: "idle"}, ...state[action.task.todoListId]]}
-        },
+        // addTaskAC(state, action: PayloadAction<TaskType>) {
+        //     state[action.payload.todoListId].unshift({...action.payload, entityStatus: "idle"})
+        //     // return {...state, [action.task.todoListId]: [{...action.task, entityStatus: "idle"}, ...state[action.task.todoListId]]}
+        // },
         changeTaskAC(state, action: PayloadAction<{task: TaskType}>) {
             const index = state[action.payload.task.todoListId].findIndex(task => task.id === action.payload.task.id)
             if (index > -1) {
@@ -165,11 +167,16 @@ const slice = createSlice({
                 state[action.payload.todolistId].splice(index, 1)
             }
         })
+        builder.addCase(addTaskTC.fulfilled, (state, action) => {
+            state[action.payload.todoListId].unshift({...action.payload, entityStatus: "idle"})
+        })
     }
 })
 
 export const tasksReducer = slice.reducer
-export const {addTaskAC, changeTaskAC, changeTaskTitleAC, changeTaskStatusAC} = slice.actions
+export const {
+    // addTaskAC,
+    changeTaskAC, changeTaskTitleAC, changeTaskStatusAC} = slice.actions
 
 
 // types

@@ -13,7 +13,7 @@ import {
     removeTodolistAC,
     todolistsReducer
 } from "../features/TodolistsList/todolists-reducer";
-import {addTaskAC, removeTaskTC, tasksReducer} from "../features/TodolistsList/tasks-reducer";
+import {addTaskTC, removeTaskTC, tasksReducer} from "../features/TodolistsList/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 
 
@@ -89,7 +89,8 @@ function AppWithReducer() {
             startDate: null,
             status: TaskStatuses.New
         }
-        dispatchToTasks(addTaskAC(task))
+        const action = addTaskTC.fulfilled(task, '', {todoId: task.todoListId, title: task.title});
+        dispatchToTasks(action)
     }
 
     const changeTaskStatus = (todolistID: string, taskID: string, status: TaskStatuses) => {
