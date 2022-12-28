@@ -5,7 +5,7 @@ import {
     tasksReducer,
     TasksStateType, updateTaskTC
 } from './tasks-reducer';
-import {addTodoListAC, fetchTodosTC, TodolistDomainType} from "./todolists-reducer";
+import {addTodoTC, fetchTodosTC, TodolistDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/todolist-api";
 
 
@@ -131,10 +131,8 @@ test('new array should be added when new todolist is added', () => {
         entityStatus: "idle"
     }
 
-    const action = addTodoListAC({todolist});
-
+    const action = addTodoTC.fulfilled({todolist}, 'requestId', todolist.title);
     const endState = tasksReducer(startState, action)
-
 
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");

@@ -6,7 +6,7 @@ import AddItemForm from "../components/AddItemForm/AddItemForm";
 import ButtonAppBar from "../components/ButtonAppBar";
 import {Container, Grid, Paper} from "@mui/material";
 import {
-    addTodoListAC,
+    addTodoTC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     FilterValuesType, removeTodoTC,
@@ -56,14 +56,14 @@ function AppWithReducer() {
     }
 
     const addTodolist = (title: string) => {
-        let action = addTodoListAC({
+        let action = addTodoTC.fulfilled({
             todolist: {
                 id: v1(),
                 title: "What to learn",
                 addedDate: '',
                 order: 0
             }
-        })
+        }, 'requestId', 'What to learn')
         dispatchToTodolists(action)
         dispatchToTasks(action)
     }

@@ -1,5 +1,5 @@
 import {
-    addTodoListAC,
+    addTodoTC,
     changeTodolistFilterAC,
     changeTodolistTitleAC, fetchTodosTC, FilterValuesType, removeTodoTC,
     TodolistDomainType,
@@ -42,7 +42,8 @@ test('correct todolist should be added', () => {
         entityStatus: "idle"
     }
 
-    const endState = todolistsReducer(startState, addTodoListAC({todolist}))
+    const action = addTodoTC.fulfilled({todolist}, 'requestId', todolist.title)
+    const endState = todolistsReducer(startState, action)
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe('test');
