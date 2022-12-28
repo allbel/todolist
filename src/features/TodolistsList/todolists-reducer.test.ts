@@ -1,9 +1,11 @@
 import {
     addTodoTC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC, fetchTodosTC, FilterValuesType, removeTodoTC,
+    fetchTodosTC,
+    FilterValuesType,
+    removeTodoTC,
     TodolistDomainType,
-    todolistsReducer
+    todolistsReducer, updateTodoTitleTC
 } from './todolists-reducer';
 import {v1} from 'uuid';
 
@@ -52,14 +54,10 @@ test('correct todolist should be added', () => {
 test('correct todolist should change its name', () => {
 
     let newTodolistTitle = "New Todolist";
+    const payload = {todolistId: todolistId2, title: newTodolistTitle}
 
-    const action = {
-        type: 'CHANGE-TODOLIST-TITLE',
-        id: todolistId2,
-        title: newTodolistTitle
-    };
-
-    const endState = todolistsReducer(startState, changeTodolistTitleAC({todolistId: todolistId2, title: newTodolistTitle}));
+    const action = updateTodoTitleTC.fulfilled(payload, 'requestId', payload)
+    const endState = todolistsReducer(startState, action);
 
     expect(endState[0].title).toBe("What to learn");
     expect(endState[1].title).toBe(newTodolistTitle);

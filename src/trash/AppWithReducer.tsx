@@ -8,9 +8,8 @@ import {Container, Grid, Paper} from "@mui/material";
 import {
     addTodoTC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
     FilterValuesType, removeTodoTC,
-    todolistsReducer
+    todolistsReducer, updateTodoTitleTC
 } from "../features/TodolistsList/todolists-reducer";
 import {addTaskTC, removeTaskTC, tasksReducer} from "../features/TodolistsList/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
@@ -48,7 +47,8 @@ function AppWithReducer() {
     }
 
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        dispatchToTodolists(changeTodolistTitleAC({todolistId, title}))
+        const action = updateTodoTitleTC.fulfilled({todolistId, title}, 'requestId', {todolistId, title})
+        dispatchToTodolists(action)
     }
 
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
