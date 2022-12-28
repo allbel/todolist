@@ -1,4 +1,4 @@
-import {addTodoListAC, fetchTodosTC, removeTodolistAC} from "./todolists-reducer";
+import {addTodoListAC, fetchTodosTC, removeTodoTC} from "./todolists-reducer";
 import {TaskStatuses, TaskType, todolistAPI, UpdateTaskType} from "../../api/todolist-api";
 import {AppRootStateType} from "../../app/store";
 import {RequestStatusType, setAppStatusAC} from "../../app/app-reducer";
@@ -123,7 +123,7 @@ const slice = createSlice({
             state[action.payload.todolist.id] = []
             // return {...state, [action.payload.todolist.id]: []}
         })
-        builder.addCase(removeTodolistAC, (state, action) => {
+        builder.addCase(removeTodoTC.fulfilled, (state, action) => {
             delete state[action.payload.todolistId]
             // 1) const {[action.id]: [], ...rest} = {...state}
             //    return rest
