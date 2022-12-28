@@ -1,10 +1,9 @@
 import {
     addTaskTC,
-    changeTaskAC,
     changeTaskTitleAC,
     fetchTasksTC, removeTaskTC,
     tasksReducer,
-    TasksStateType
+    TasksStateType, updateTaskTC
 } from './tasks-reducer';
 import {addTodoListAC, fetchTodolistsAC, TodolistDomainType} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/todolist-api";
@@ -75,7 +74,7 @@ test('correct task should be added to correct array', () => {
     }
 
     // const action = addTaskAC(task);
-    const action = addTaskTC.fulfilled(task, '', {todoId: task.todoListId, title: task.title});
+    const action = addTaskTC.fulfilled(task, 'requestId', {todoId: task.todoListId, title: task.title});
 
     const endState = tasksReducer(startState, action)
 
@@ -101,7 +100,8 @@ test('status of specified task should be changed', () => {
         status: TaskStatuses.Completed
     }
 
-    const action = changeTaskAC({task});
+    // const action = changeTaskAC({task});
+    const action = updateTaskTC.fulfilled({task}, 'requestID', {todolistId: task.todoListId, taskID: task.id, value: task});
 
     const endState = tasksReducer(startState, action)
 

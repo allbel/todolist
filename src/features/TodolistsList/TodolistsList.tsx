@@ -55,12 +55,12 @@ export const TodolistsList: React.FC = () => {
         dispatch(addTaskTC({todoId, title}))
     }, [dispatch])
 
-    const changeTaskStatus = useCallback((todolistID: string, taskID: string, status: TaskStatuses) => {
-        dispatch(updateTaskTC(todolistID, taskID, {status}))
+    const changeTaskStatus = useCallback((todolistId: string, taskID: string, status: TaskStatuses) => {
+        dispatch(updateTaskTC({todolistId, taskID, value: {status}}))
     }, [dispatch])
 
-    const changeTaskTitle = useCallback((todolistID: string, taskID: string, title: string) => {
-        dispatch(updateTaskTC(todolistID, taskID, {title}))
+    const changeTaskTitle = useCallback((todolistId: string, taskID: string, title: string) => {
+        dispatch(updateTaskTC({todolistId, taskID, value: {title}}))
     }, [dispatch])
 
     if (!isLoggedIn) {
